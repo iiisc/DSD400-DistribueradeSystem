@@ -1,8 +1,8 @@
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.server import SimpleXMLRPCRequestHandler
 
-HOST = "212.25.133.127"
-PORT = 50007
+HOST = "127.0.0.1"
+PORT = 1234
 
 class RequestHandler(SimpleXMLRPCRequestHandler):
     rpc_paths = ('/RPC2',)
@@ -34,14 +34,16 @@ with SimpleXMLRPCServer((HOST, PORT),
             return "You bump into the wall!"
         if command == "help" or command == "h" or command == "?":
             return "Try looking around, go east, west, or quit!"
-        return "I don't understand your command!"
         if command == "quit" or command == "q":
             return "You are trying to quit!"
+        return "I don't understand your command!"
+
+
 
     server.register_function(parse_and_execute, "parse")
 
     def welcome():
-        return "Welcome to server lol"
+        return "Welcome to the server!"
 
     server.register_function(welcome, "w")
     
