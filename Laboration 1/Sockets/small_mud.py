@@ -1,9 +1,3 @@
-"""
-small_mud.py, Thomas Lundqvist, 2019-2023, use freely!
-
-A small beginning of a MUD, Multi User Dungeon, game.
-"""
-
 import socket
 Current_room = 0
 description = [
@@ -36,9 +30,6 @@ def running():
     welcome = welcome.encode()
     conn.sendall(welcome)
 
-    #commands= "\nCommands:\n look\n go east \n go west \n help \n quit\n"
-    #commands=commands.encode()
-    #conn.sendall(commands)
     while not finished:
      
         with conn:
@@ -56,15 +47,13 @@ def running():
                     data=retur.encode()
                     conn.sendall(data)
 
-HOST = "212.25.133.127"
-PORT = 50007
+HOST = "127.0.0.1"
+PORT = 1234
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-
     s.bind((HOST, PORT))
     s.listen(10) #Ettan står för hur många som kan stå i kö
     while True:
-
         conn, addr = s.accept() # returns new socket and addr. client
         status=running()
         if status== 1 :
