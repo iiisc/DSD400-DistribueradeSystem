@@ -38,8 +38,6 @@ with SimpleXMLRPCServer((HOST, PORT),
             return "You are trying to quit!"
         return "I don't understand your command!"
 
-
-
     server.register_function(parse_and_execute, "parse")
 
     def welcome():
