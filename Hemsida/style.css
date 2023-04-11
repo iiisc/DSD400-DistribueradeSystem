@@ -1,0 +1,21 @@
+  h1 {
+    color: white;
+  }
+  p {
+    color: red;
+    font-size: xx-large;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+.danger{
+    background-color: black;
+    background-image: url("assets/komainu.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.safe{
+    background-color: white;
+    background-image: url("assets/smc.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
