@@ -38,6 +38,8 @@ class RequestHandler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         self.send_response(200)
+        self.send_header('Content-type','text/json')
+        self.end_headers() 
         content_len = int(self.headers['content-length'])
         post_body = self.rfile.read(content_len)
         test_data = json.loads(post_body)
