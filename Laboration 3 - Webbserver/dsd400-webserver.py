@@ -2,7 +2,7 @@ from http.server import SimpleHTTPRequestHandler, HTTPServer
 import json, random
 import pymysql
 
-INTERFACES = 'localhost'
+INTERFACES = "212.25.133.39"
 PORT = 8020
 
 class RequestHandler(SimpleHTTPRequestHandler):
