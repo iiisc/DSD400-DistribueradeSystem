@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-#
-# Exempel för DSD400-kursen. Webbserver som tillhandahåller statiska
-# filer från "html"-katalogen samt genererad dynamiskt JSON för
-# URL:er som börjar på "/api".
-#
-# Thomas Lundqvist, 2020, use freely!
-
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 import json, random
 
@@ -25,19 +17,17 @@ class RequestHandler(SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type','text/json')
             self.end_headers()
-            if self.path.startswith('/api/slump'):
+            if self.path.startswith('/api/spelare'):
                 # Send the response dict as json message
-                response = {'title': 'Min fina rubrik',
-                            'text': 'Lite slump: ',
-                            'slump': random.randint(0,100)}
+                ålder= str(random.randint(0,100))+" år"
+                response = {'spelarId': 'SpelarID: 1',
+                            'spelarNamn': 'Carl',
+                            'ålder': ålder}
             else:
                 response = {'error': 'Not implemented'}
             self.wfile.write(json.dumps(response).encode())
             return
-        
-        # Call default serving static files if not '/api'
-        # from 'html' subdirectory
-        
+            
         self.path = '/html' + self.path
         return super().do_GET()
     

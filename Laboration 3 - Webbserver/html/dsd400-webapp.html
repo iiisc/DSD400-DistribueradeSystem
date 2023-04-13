@@ -7,14 +7,15 @@
     <meta charset="utf-8"/>
 </head>
 <body>
-  <h1 id="rubrik">Tomt</h1>
-  <p id="text">tomt</p>
-  <button id="ajaxButton" type="button">Make a request</button>
+
+  <h1 id="spelarNamn">Ingen</h1>
+  <p id="spelarid">-</p>
+  <button id="minKnapp" type="button">NY KNAPP</button>
 
 <script>
  (function() {
    var httpRequest;
-   document.getElementById("ajaxButton").addEventListener('click', makeRequest);
+   document.getElementById("minKnapp").addEventListener('click', request);
 
    // Körs när man trycker på knappen, skicka förfrågan
    function makeRequest() {
@@ -29,19 +30,29 @@
      httpRequest.send();
    }
 
+   function request() {
+     httpRequest = new XMLHttpRequest();
+     
+     if (!httpRequest) {
+       alert('Giving up :( Cannot create an XMLHTTP instance');
+       return false;
+     }
+     httpRequest.onreadystatechange = handleResponse;
+     httpRequest.open('GET', '/api/spelare');
+     httpRequest.send();
+   }
+  
    // Ta hand om JSON-svaret från servern
    function handleResponse() {
      // för debugging: alertContents();
      if (httpRequest.readyState == 4 && httpRequest.status == 200) {
        var myArr = JSON.parse(httpRequest.responseText);
-       var txtElem = document.getElementById("text");
-       if (txtElem.textContent == "tomt") {
-	 // Första gången: sätt rubrik och text
-         document.getElementById("rubrik").textContent = myArr['title'];
-	 txtElem.textContent = myArr['text'] + " " + myArr['slump'];
+       var txtElem = document.getElementById("spelarid");
+       if (txtElem.textContent == "-") {
+        document.getElementById("spelarNamn").textContent = myArr['spelarNamn'];
+	      txtElem.innerHTML = myArr['spelarId'] + '<br>' + myArr['ålder'];
        } else {
 	 // Om man trycker fler gånger, lägg enbart på slumptal
-	 txtElem.textContent += ", " + myArr['slump'];
        }
      }
    }
