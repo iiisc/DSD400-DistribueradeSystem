@@ -8,15 +8,36 @@
 </head>
 <body>
 
-  <h1 id="spelarNamn">Ingen</h1>
-  <p id="spelarid">-</p>
-  <button id="minKnapp" type="button">NY KNAPP</button>
+  <h1 id="spelarNamn">Spelare</h1>
+  <p id="spelarid"></p>
+
+  <h2>Lägg till nytt</h2>
+  SpelarID&emsp;<input id="inputId" type="text">
+  <br>Namn&emsp;<input id="inputNamn" type="text">
+  <br>Ålder&emsp;<input id="inputÅlder" type="text"> <button id = "add">Lägg till spelare</button>
+  <br> <br>
+
+  <button id="getData" type="button">Läs in spelare</button>
+  <button id="reset" type="button" >Reset</button>
+  
+  <table id="mintabell">
+    <tr id="headerRow">
+      <th id="spelarId" align = "left">Id &emsp;</th>
+      <th id="spelarNamn" align = "center">Namn &emsp;</th>
+      <th id="spelarÅlder" align = "right">Ålder</th>
+    </tr>
+    <tr>
+      <tbody id="tkopp"></tbody>
+    </tr>
+   </table>
+
 
 <script>
  (function() {
-   var httpRequest;
-   document.getElementById("minKnapp").addEventListener('click', request);
-
+  var httpRequest;
+   document.getElementById("getData").addEventListener('click', request); 
+   document.getElementById("reset").addEventListener('click', reset);
+   document.getElementById("add").addEventListener('click', add);
    // Körs när man trycker på knappen, skicka förfrågan
    function makeRequest() {
      httpRequest = new XMLHttpRequest();
@@ -31,8 +52,8 @@
    }
 
    function request() {
+    reset();
      httpRequest = new XMLHttpRequest();
-     
      if (!httpRequest) {
        alert('Giving up :( Cannot create an XMLHTTP instance');
        return false;
@@ -41,22 +62,21 @@
      httpRequest.open('GET', '/api/spelare');
      httpRequest.send();
    }
-  
    // Ta hand om JSON-svaret från servern
    function handleResponse() {
      // för debugging: alertContents();
      if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+
        var myArr = JSON.parse(httpRequest.responseText);
-       var txtElem = document.getElementById("spelarid");
-       if (txtElem.textContent == "-") {
-        document.getElementById("spelarNamn").textContent = myArr['spelarNamn'];
-	      txtElem.innerHTML = myArr['spelarId'] + '<br>' + myArr['ålder'];
-       } else {
-	 // Om man trycker fler gånger, lägg enbart på slumptal
+       console.log(myArr[1])
+       for (let i = 0; i < myArr.length; i++) {
+        addrow(myArr[i][0], myArr[i][1], myArr[i][2])
        }
+       var txtElem = document.getElementById("spelarid");
      }
    }
    
+
    // Bra för debugging
    function alertContents() {
      if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -67,7 +87,58 @@
        }
      }
    }
- })();
+})();
+
+ function add(){
+  let newID,newName,newAge;
+
+  newID=document.getElementById("inputId").value
+  newName=document.getElementById("inputNamn").value
+  newAge=document.getElementById("inputÅlder").value
+  console.log(newID,newName,newAge)
+
+ }
+
+ function addrow(txt1, txt2, txt3) {
+  let tbl = document.getElementById("tkopp");
+  let tr = document.createElement("tr");
+  tbl.appendChild(tr);
+  let td1 = document.createElement("td");
+  let td2 = document.createElement("td");
+  let td3 = document.createElement("td");
+  tr.appendChild(td1)
+  tr.appendChild(td2)
+  tr.appendChild(td3)
+  td1.textContent = txt1;
+  td2.textContent = txt2;
+  td3.textContent = txt3;
+ }
+
+ function reset() {
+document.getElementById('tkopp').remove()
+let tbl = document.getElementById('mintabell')
+let tkopp = document.createElement("tbody");
+tkopp.id = 'tkopp'
+tbl.appendChild(tkopp)
+}
+
+function upload() {
+    var xhr = new XMLHttpRequest();
+    var url = "/api/post";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        console.log(json.email + ", " + json.password);
+        }
+      };
+var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+console.log(data)
+xhr.send(data);
+}
+
+upload()
 </script>
 </body>
 </html>

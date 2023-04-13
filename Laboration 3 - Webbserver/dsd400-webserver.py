@@ -1,13 +1,9 @@
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 import json, random
+import pymysql
 
 INTERFACES = 'localhost'
 PORT = 8020
-
-# This class will handle any incoming GET requests
-# URLs starting with /api/ is catched for REST/JSON calls
-# Other URLs are handled by default handler to serve static
-# content (directories, files)
 
 class RequestHandler(SimpleHTTPRequestHandler):
         
@@ -17,12 +13,20 @@ class RequestHandler(SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type','text/json')
             self.end_headers()
+            
             if self.path.startswith('/api/spelare'):
-                # Send the response dict as json message
-                ålder= str(random.randint(0,100))+" år"
-                response = {'spelarId': 'SpelarID: 1',
-                            'spelarNamn': 'Carl',
-                            'ålder': ålder}
+                con = pymysql.connect(
+                    user="pyVACL",
+                    password="lurigtpassword",
+                    host="dsd400.port0.org",
+                    port=3306,
+                    database="VA_CL"
+                )
+                cur = con.cursor()
+                cur.execute("SELECT * FROM Spelare")
+                res = cur.fetchall()
+                response = res
+     
             else:
                 response = {'error': 'Not implemented'}
             self.wfile.write(json.dumps(response).encode())
@@ -30,7 +34,19 @@ class RequestHandler(SimpleHTTPRequestHandler):
             
         self.path = '/html' + self.path
         return super().do_GET()
-    
+
+    def do_POST(self):
+        if self.path.startswith('api/post'):
+            self.send_response(200)
+            #self.send_header('content-type', 'application/json')
+            #self.end_headers()
+
+            content_len = int(self.headers['content-length'])
+            post_body = self.rfile.read(content_len)
+            test_data = json.loads(post_body)
+
+            return super().do_POST()
+
 try:
     #Create a web server and define the handler to manage the
     #incoming request
