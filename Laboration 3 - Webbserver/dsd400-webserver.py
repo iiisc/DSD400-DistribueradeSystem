@@ -36,16 +36,13 @@ class RequestHandler(SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def do_POST(self):
-        if self.path.startswith('api/post'):
-            self.send_response(200)
-            #self.send_header('content-type', 'application/json')
-            #self.end_headers()
-
-            content_len = int(self.headers['content-length'])
-            post_body = self.rfile.read(content_len)
-            test_data = json.loads(post_body)
-
-            return super().do_POST()
+        #if self.path.startswith('api/post'):
+        print("Kommer vi hit liksom")
+        content_len = int(self.headers['content-length'])
+        post_body = self.rfile.read(content_len)
+        test_data = json.loads(post_body)
+        print(test_data)
+        
 
 try:
     #Create a web server and define the handler to manage the

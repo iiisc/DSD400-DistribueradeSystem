@@ -96,6 +96,7 @@
   newName=document.getElementById("inputNamn").value
   newAge=document.getElementById("inputÅlder").value
   console.log(newID,newName,newAge)
+  upload(newID,newName,newAge)
 
  }
 
@@ -122,23 +123,25 @@ tkopp.id = 'tkopp'
 tbl.appendChild(tkopp)
 }
 
-function upload() {
-    var xhr = new XMLHttpRequest();
-    var url = "/api/post";
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
+function upload(id,namn,age) {
+  var xhr = new XMLHttpRequest();
+  var url = "/api/post";
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         var json = JSON.parse(xhr.responseText);
         console.log(json.email + ", " + json.password);
-        }
-      };
-var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
-console.log(data)
-xhr.send(data);
+      }
+    };
+
+
+
+  var data = JSON.stringify({"id": id, "namn": namn, "alder": age});
+  console.log(data)
+  xhr.send(data);
 }
 
-upload()
 </script>
 </body>
 </html>
