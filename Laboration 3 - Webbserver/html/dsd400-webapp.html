@@ -3,34 +3,58 @@
 -->
 <html>
   <head>
-    <title>Enkelt test av JSON AJAX</title>
+    <title>Spelare</title>
     <meta charset="utf-8"/>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 10px;
+  background-color: #8e14a7;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(52, 161, 38, 0.8);
+  border: 1px solid black;
+  text-align: center;
+  font-size: 30px;
+}
+</style>
 </head>
 <body>
-
-  <h1 id="spelarNamn">Spelare</h1>
-  <p id="spelarid"></p>
-
-  <h2>Lägg till nytt</h2>
-  SpelarID&emsp;<input id="inputId" type="text">
-  <br>Namn&emsp;<input id="inputNamn" type="text">
-  <br>Ålder&emsp;<input id="inputÅlder" type="text"> <button id = "add">Lägg till spelare</button>
-  <br> <br>
-
-  <button id="getData" type="button">Läs in spelare</button>
-  <button id="reset" type="button" >Reset</button>
-  
-  <table id="mintabell">
-    <tr id="headerRow">
-      <th id="spelarId" align = "left">Id &emsp;</th>
-      <th id="spelarNamn" align = "center">Namn &emsp;</th>
-      <th id="spelarÅlder" align = "right">Ålder</th>
-    </tr>
-    <tr>
-      <tbody id="tkopp"></tbody>
-    </tr>
-   </table>
-
+  <div class="grid-container">
+    <div>
+      SpelarID <br>
+      Namn <br>
+      Ålder <br>
+    </div>
+    <div>
+      <input id="inputId" type="text"><br>
+      <input id="inputNamn" type="text"><br>
+      <input id="inputÅlder" type="text">
+    </div>
+    <div>
+      <button id="getData" type="button">Läs in spelare</button>
+    </div>  
+    <div>
+      <button id = "add">Lägg till spelare</button>
+    </div>
+    <div>  <table id="mintabell">
+      <tr id="headerRow">
+        <th id="spelarId" align = "center">Id</th>
+        <th id="spelarNamn" align = "center">Namn</th>
+        <th id="spelarÅlder" align = "center">Ålder</th>
+      </tr>
+      <tr>
+        <tbody id="tkopp"></tbody>
+      </tr>
+     </table></div>
+     <div>
+      <button id="reset" type="button" >Reset</button>
+     </div>
+  </div>
 
 <script>
  (function() {
@@ -128,15 +152,6 @@ function upload(id,namn,age) {
   var url = "/api/post";
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
-        console.log(json.email + ", " + json.password);
-      }
-    };
-
-
-
   var data = JSON.stringify({"id": id, "namn": namn, "alder": age});
   console.log(data)
   xhr.send(data);

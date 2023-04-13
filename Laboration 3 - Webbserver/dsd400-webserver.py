@@ -26,6 +26,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
                 cur.execute("SELECT * FROM Spelare")
                 res = cur.fetchall()
                 response = res
+                con.close()
      
             else:
                 response = {'error': 'Not implemented'}
@@ -36,13 +37,31 @@ class RequestHandler(SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def do_POST(self):
-        #if self.path.startswith('api/post'):
-        print("Kommer vi hit liksom")
+        self.send_response(200)
         content_len = int(self.headers['content-length'])
         post_body = self.rfile.read(content_len)
         test_data = json.loads(post_body)
-        print(test_data)
+        nyttid=test_data['id']
+        nyttnamn= test_data['namn']
+        nyalder=test_data['alder']
+
+        query="INSERT INTO Spelare (SpelarID, Namn, Ålder) VALUES ("+str(nyttid)+", \'"+nyttnamn+"\', "+str(nyalder)+");"
+        print(query)
         
+        connection = pymysql.connect(
+            user="pyVACL",
+            password="lurigtpassword",
+            host="dsd400.port0.org",
+            port=3306,
+            database="VA_CL"
+            )
+
+        cur = connection.cursor()
+        cur.execute(query)
+
+        connection.commit()
+
+
 
 try:
     #Create a web server and define the handler to manage the
