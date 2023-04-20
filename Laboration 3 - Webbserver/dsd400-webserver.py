@@ -1,8 +1,9 @@
 from http.server import SimpleHTTPRequestHandler, HTTPServer
-import json, random
+import json
 import pymysql
 
-INTERFACES = "212.25.133.39"
+INTERFACES = "localhost"
+#INTERFACES = "127.0.0.1"
 PORT = 8020
 
 class RequestHandler(SimpleHTTPRequestHandler):
@@ -33,7 +34,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(response).encode())
             return
             
-        self.path = '/html' + self.path
+        #self.path = '/html' + self.path
         return super().do_GET()
 
     def do_POST(self):
