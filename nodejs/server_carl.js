@@ -1,31 +1,30 @@
 var express = require('express');   //Require används för att ladda moduler
-var app = express();                //Express är modulen
 
+var app = express();                //Express är modulen
 var mysql = require('mysql');
 
-//app.get('/', function (req, res) {
-//   res.send('Hello World');
-//})
 
-//msg = "Hello world";
-app.get('/', function(request, response){
+app.get('/', function(request, response) {
+    response.sendFile('C:/Users/Fractal ERA/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
+});
 
+app.get('/api/spelare', function(GET, response){
     var connection = mysql.createConnection({
         user: "pyVACL",
         password: "lurigtpassword",
         host: "dsd400.port0.org",
-        //port: 3306,
         database: "VA_CL"
     });
 
     connection.connect(function(err) {
         if (err) throw err;
-        connection.query("SELECT * FROM Spelare", function (err, result, fields) {
-            if (err) throw err;
+        connection.query("SELECT * FROM Spelare", function (err, result) {
+            //if (err) throw err;
+            //str = JSON.stringify(result);
             console.log(result);
+            response.send(result)
         });
     });
-    response.send("hemsida")
 });
 
 app.get('/api/apa', function(request, response){

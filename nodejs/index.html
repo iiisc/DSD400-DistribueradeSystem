@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- Exempel för DSD400-kursen på JSON-AJAX, Thomas Lundqvist, 2020, use freely!
+-->
+<html>
+  <head>
+    <title>Spelare</title>
+    <meta charset="utf-8"/>
+</head>
+  <body>
+    <button id="getData">Läs in spelare</button>
+    <div>  <table id="mintabell">
+      <tr id="headerRow">
+        <th id="spelarId" align = "center">Id</th>
+        <th id="spelarNamn" align = "center">Namn</th>
+        <th id="spelarÅlder" align = "center">Ålder</th>
+      </tr>
+      <tr>
+        <tbody id="tkopp"></tbody>
+      </tr>
+     </table>
+    </div>
+
+
+    <script>
+      document.getElementById("getData").addEventListener('click', request);
+      
+      function myFunc() {
+        console.log("CLICKITYCLICK!");
+    }
+
+      function request() {
+        req = new XMLHttpRequest();
+        req.open('GET', '/api/spelare');
+        req.send();
+      }
+
+
+
+    </script>
+  </body>
+</html>
