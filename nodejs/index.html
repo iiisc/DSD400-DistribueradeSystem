@@ -1,40 +1,103 @@
 <!DOCTYPE html>
-<!-- Exempel för DSD400-kursen på JSON-AJAX, Thomas Lundqvist, 2020, use freely!
--->
 <html>
   <head>
     <title>Spelare</title>
     <meta charset="utf-8"/>
+
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+        gap: 10px;
+        background-color: #8e14a7;
+        padding: 10px;
+      }
+      
+      .grid-container > div {
+        background-color: rgba(52, 161, 38, 0.8);
+        border: 3px solid rgb(47, 190, 42);
+        text-align: center;
+        font-size: 30px;
+        padding-bottom: 10px;
+      }
+      th, td{
+        border:3px #22dd5a;
+        text-align: left;
+        padding-right: 40px;
+      }
+      
+      </style>
+
 </head>
-  <body>
-    <button id="getData">Läs in spelare</button>
-    <div>  <table id="mintabell">
-      <tr id="headerRow">
-        <th id="spelarId" align = "center">Id</th>
-        <th id="spelarNamn" align = "center">Namn</th>
-        <th id="spelarÅlder" align = "center">Ålder</th>
-      </tr>
-      <tr>
-        <tbody id="tkopp"></tbody>
-      </tr>
-     </table>
-    </div>
+<body>
+<div class="grid-container">
+  
+  <div>
+    <button id="getData" type="button">GET</button>
+  </div>  
+
+  <div>  
+  <table id="mintabell">
+    <tr id="headerRow">
+      <th id="spelarId" align = "center">Id</th>
+      <th id="spelarNamn" align = "center">Namn</th>
+      <th id="spelarÅlder" align = "center">Ålder</th>
+    </tr>
+    <tr>
+      <tbody id="tkopp"></tbody>
+    </tr>
+   </table>
+  </div>
+</div>
 
 
     <script>
-      document.getElementById("getData").addEventListener('click', request);
+      var req;
+        document.getElementById("getData").addEventListener('click', request);
       
       function myFunc() {
         console.log("CLICKITYCLICK!");
     }
 
       function request() {
+
         req = new XMLHttpRequest();
         req.open('GET', '/api/spelare');
+        req.onreadystatechange = handleResponse;
         req.send();
       }
 
+      function handleResponse() {
 
+        var myArr = req.responseText;
+       //var myArr = JSON.parse(req.responseText);
+       //var test = JSON.parse(myArr);
+       //console.log(myArr);
+       test = JSON.stringify(myArr);
+       var test2 = JSON.parse(test);
+      console.log(test2[]);
+       
+      // for (let i = 0; i < myArr.length; i++) {
+      //  addrow(myArr[i][0], myArr[i][1], myArr[i][2])
+      // }
+       var txtElem = document.getElementById("spelarid");
+      }
+
+      function addrow(txt1, txt2, txt3) {
+        let tbl = document.getElementById("tkopp");
+        let tr = document.createElement("tr");
+        tbl.appendChild(tr);
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
+        tr.appendChild(td1)
+        tr.appendChild(td2)
+        tr.appendChild(td3)
+        td1.textContent = txt1;
+        td2.textContent = txt2;
+        td3.textContent = txt3;
+      }
 
     </script>
   </body>
