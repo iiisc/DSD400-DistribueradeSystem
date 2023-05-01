@@ -3,7 +3,6 @@
   <head>
     <title>Spelare</title>
     <meta charset="utf-8"/>
-
     <style>
       .grid-container {
         display: grid;
@@ -32,11 +31,9 @@
 </head>
 <body>
 <div class="grid-container">
-  
   <div>
     <button id="getData" type="button">GET</button>
   </div>  
-
   <div>  
   <table id="mintabell">
     <tr id="headerRow">
@@ -51,14 +48,9 @@
   </div>
 </div>
 
-
     <script>
       var req;
         document.getElementById("getData").addEventListener('click', request);
-      
-      function myFunc() {
-        //console.log("CLICKITYCLICK!");
-    }
 
       function request() {
         req = new XMLHttpRequest();
@@ -68,7 +60,7 @@
       }
 
       function handleResponse() {
-        if (req.readyState == 4 && req.status == 200){
+        if (req.readyState == 4 && req.status == 200){ //Kollar så onreadystatechange faktiskt blir färdig innan den kör handleResponse
         myArr = JSON.parse(req.responseText);              
         for (let i = 0; i < myArr.length; i++) {
           addrow(myArr[i].SpelarID, myArr[i].Namn, myArr[i].Ålder)
