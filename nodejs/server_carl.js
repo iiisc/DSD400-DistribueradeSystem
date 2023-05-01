@@ -1,11 +1,11 @@
 var express = require('express');   //Require används för att ladda moduler
-
 var app = express();                //Express är modulen
 var mysql = require('mysql');
 
 
 app.get('/', function(request, response) {
-    response.sendFile('C:/Users/Fractal ERA/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
+    //response.sendFile('C:/Users/Fractal ERA/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
+    response.sendFile('C:/Users/isc/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
 });
 
 app.get('/api/spelare', function(GET, response){
@@ -20,8 +20,12 @@ app.get('/api/spelare', function(GET, response){
     connection.connect(function(err) {
         connection.query("SELECT * FROM Spelare", function (err, result) {
             //jsonRes = JSON.stringify(result);
-            //console.log(jsonRes);
-            response.json(result);
+            if (err) {
+                console.log(err);
+            }
+            //console.log(result);
+            //console.log(JSON.parse(JSON.stringify(result)));
+            response.send(result);
         });
     });
 });
