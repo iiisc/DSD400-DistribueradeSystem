@@ -9,6 +9,7 @@ app.get('/', function(request, response) {
 });
 
 app.get('/api/spelare', function(GET, response){
+    response.setHeader('Content-Type', 'application/json');
     var connection = mysql.createConnection({
         user: "pyVACL",
         password: "lurigtpassword",
@@ -17,12 +18,10 @@ app.get('/api/spelare', function(GET, response){
     });
 
     connection.connect(function(err) {
-        if (err) throw err;
         connection.query("SELECT * FROM Spelare", function (err, result) {
-            //if (err) throw err;
-            //str = JSON.stringify(result);
-            console.log(result);
-            response.send(result)
+            //jsonRes = JSON.stringify(result);
+            //console.log(jsonRes);
+            response.json(result);
         });
     });
 });
