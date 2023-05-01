@@ -70,18 +70,16 @@
 
       function handleResponse() {
 
-        var myArr = req.responseText;
-       //var myArr = JSON.parse(req.responseText);
-       //var test = JSON.parse(myArr);
-       //console.log(myArr);
-       test = JSON.stringify(myArr);
-       var test2 = JSON.parse(test);
-      console.log(test2[]);
-       
-      // for (let i = 0; i < myArr.length; i++) {
+      var response = req.responseText;
+      var myArr = JSON.parse(JSON.stringify(response));
+      console.log(myArr[4]);
+
+
+      //console.log(JSON.parse(response)[5]); //Fungerar, men ger fortfarande felmeddelande om "unexpected EOF"
+              
+      //for (let i = 0; i < myArr.length; i++) {
       //  addrow(myArr[i][0], myArr[i][1], myArr[i][2])
       // }
-       var txtElem = document.getElementById("spelarid");
       }
 
       function addrow(txt1, txt2, txt3) {
