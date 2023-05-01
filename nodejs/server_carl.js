@@ -19,21 +19,17 @@ app.get('/api/spelare', function(GET, response){
 
     connection.connect(function(err) {
         connection.query("SELECT * FROM Spelare", function (err, result) {
-            //jsonRes = JSON.stringify(result);
             if (err) {
                 console.log(err);
             }
-            //console.log(result);
-            //console.log(JSON.parse(JSON.stringify(result)));
             response.send(result);
         });
     });
 });
 
 app.get('/api/apa', function(request, response){
-    response.send("Chimpans")
-  });
-
+    response.send(request.query);
+});
 
 var server = app.listen(8081, function () {
    var host = server.address().address

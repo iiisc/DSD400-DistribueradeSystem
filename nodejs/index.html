@@ -57,11 +57,10 @@
         document.getElementById("getData").addEventListener('click', request);
       
       function myFunc() {
-        console.log("CLICKITYCLICK!");
+        //console.log("CLICKITYCLICK!");
     }
 
       function request() {
-
         req = new XMLHttpRequest();
         req.open('GET', '/api/spelare');
         req.onreadystatechange = handleResponse;
@@ -69,17 +68,10 @@
       }
 
       function handleResponse() {
-
-      var response = req.responseText;
-      var myArr = JSON.parse(JSON.stringify(response));
-      console.log(myArr[4]);
-
-
-      //console.log(JSON.parse(response)[5]); //Fungerar, men ger fortfarande felmeddelande om "unexpected EOF"
-              
-      //for (let i = 0; i < myArr.length; i++) {
-      //  addrow(myArr[i][0], myArr[i][1], myArr[i][2])
-      // }
+      myArr = JSON.parse(req.responseText);              
+      for (let i = 0; i < myArr.length; i++) {
+        addrow(myArr[i].SpelarID, myArr[i].Namn, myArr[i].Ålder)
+       }
       }
 
       function addrow(txt1, txt2, txt3) {
