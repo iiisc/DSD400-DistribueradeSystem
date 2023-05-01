@@ -4,8 +4,8 @@ var mysql = require('mysql');
 
 
 app.get('/', function(request, response) {
-    //response.sendFile('C:/Users/Fractal ERA/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
-    response.sendFile('C:/Users/isc/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
+    response.sendFile('C:/Users/Fractal ERA/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
+    //response.sendFile('C:/Users/isc/Documents/GitHub/DSD400-DistribueradeSystem/nodejs/index.html');
 });
 
 app.get('/api/spelare', function(GET, response){

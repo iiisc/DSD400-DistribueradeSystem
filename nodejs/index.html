@@ -68,11 +68,13 @@
       }
 
       function handleResponse() {
-      myArr = JSON.parse(req.responseText);              
-      for (let i = 0; i < myArr.length; i++) {
-        addrow(myArr[i].SpelarID, myArr[i].Namn, myArr[i].Ålder)
+        if (req.readyState == 4 && req.status == 200){
+        myArr = JSON.parse(req.responseText);              
+        for (let i = 0; i < myArr.length; i++) {
+          addrow(myArr[i].SpelarID, myArr[i].Namn, myArr[i].Ålder)
        }
       }
+    }
 
       function addrow(txt1, txt2, txt3) {
         let tbl = document.getElementById("tkopp");
